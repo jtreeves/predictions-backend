@@ -4,3 +4,5 @@ This repository features:
 - Passport for password authentication
 - An initial model for the app's users
 - Initial routes for GET and POST functionality with the users model
+
+![ERD](/images/erd.png)
