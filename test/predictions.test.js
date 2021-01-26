@@ -31,12 +31,9 @@ describe('PREDICTIONS: POST route for /:id', () => {
                     note: {comments: 'I like this'}
                 }
             })
-        console.log(`NEWPREDICTION: ${newPrediction}`)
-        console.log(`NEWPREDICTION KEYS: ${Object.keys(newPrediction)}`)
         const foundPredictions = await db.Prediction.find({
             user: foundUser._id
         })
-        console.log(`FOUNDPREDICTION: ${foundPredictions}`)
         expect(newPrediction).to.exist
         expect(foundPredictions).to.have.lengthOf(1)
     })
@@ -61,10 +58,20 @@ describe('PREDICTIONS: GET route for /:id', () => {
         const foundPrediction = await db.Prediction.findOne({
             user: foundUser._id
         })
+        console.log(`FOUNDPREDICTION: ${foundPrediction}`)
+        console.log(`FOUNDPREDICTION._ID: ${foundPrediction._id}`)
+        console.log(`FOUNDPREDICTION KEYS: ${Object.keys(foundPrediction)}`)
         const getPrediction = await request(app)
             .get(`/predictions/${foundUser._id}`)
             .set('Authorization', loggedUser.body.token)
         let matchPredictions
+        console.log(`GETPREDICTION: ${getPrediction}`)
+        console.log(`GETPREDICTION.BODY: ${getPrediction.body}`)
+        console.log(`GETPREDICTION.BODY.PREDICTION: ${getPrediction.body.prediction}`)
+        console.log(`GETPREDICTION.BODY.PREDICTION._ID: ${getPrediction.body.prediction._id}`)
+        console.log(`GETPREDICTION KEYS: ${Object.keys(getPrediction)}`)
+        console.log(`GETPREDICTION.BODY KEYS: ${Object.keys(getPrediction.body)}`)
+        console.log(`GETPREDICTION.BODY.PREDICTION KEYS: ${Object.keys(getPrediction.body.prediction)}`)
         if (getPrediction.body.prediction._id == foundPrediction._id) {
             matchPredictions = true
         } else {
