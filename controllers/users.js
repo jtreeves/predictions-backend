@@ -98,13 +98,16 @@ router.post('/login', async (req, res) => {
     }
 })
 
-// Create GET route for users/current (Private)
-router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
-    res.json({
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email
-    })
+// Create GET route for users/:id (Private)
+router.get('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    try {
+        const currentUser = await db.User.findOne({
+            _id: req.params.id
+        })
+        res.status(200).json({user: currentUser})
+    } catch(error) {
+        res.status(400).json({msg: error})
+    }
 })
 
 // Export router
