@@ -17,6 +17,7 @@ describe('PREDICTIONS: POST route for /:id', () => {
                 password: 'victoria1234'
             })
         console.log(`LOGGEDUSER: ${loggedUser}`)
+        console.log(`LOGGEDUSER.BODY.TOKEN: ${loggedUser.body.token}`)
         const foundUser = await db.User.findOne({
             email: 'victoria@email.com'
         })
