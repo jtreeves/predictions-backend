@@ -27,7 +27,12 @@ describe('PREDICTIONS: POST route for /:id', () => {
             .set('Authorization', loggedUser.body.token)
             .send({
                 user: foundUser._id,
-                title: 'Q3 Profits'
+                regression: 1,
+                title: 'Q3 Profits',
+                sections: {
+                    favorite: {graph: 'cubic'},
+                    note: {comments: 'I like this'}
+                }
             })
         console.log(`NEWPREDICTION: ${newPrediction}`)
         const foundPredictions = await db.Prediction.find({
