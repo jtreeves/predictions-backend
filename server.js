@@ -6,7 +6,7 @@ const cors = require('cors')
 const passport = require('passport')
 
 // Import internal configuration
-require('./configurations/passport')(passport)
+require('./middleware/passport')(passport)
 
 // Import internal controllers
 const users = require('./controllers/users')
