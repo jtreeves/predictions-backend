@@ -16,12 +16,9 @@ describe('PREDICTIONS: POST route for /:id', () => {
                 email: 'victoria@email.com',
                 password: 'victoria1234'
             })
-        console.log(`LOGGEDUSER: ${loggedUser}`)
-        console.log(`LOGGEDUSER.BODY.TOKEN: ${loggedUser.body.token}`)
         const foundUser = await db.User.findOne({
             email: 'victoria@email.com'
         })
-        console.log(`FOUNDUSER: ${foundUser}`)
         const newPrediction = await request(app)
             .post(`/predictions/${foundUser._id}`)
             .set('Authorization', loggedUser.body.token)
@@ -35,10 +32,11 @@ describe('PREDICTIONS: POST route for /:id', () => {
                 }
             })
         console.log(`NEWPREDICTION: ${newPrediction}`)
+        console.log(`NEWPREDICTION KEYS: ${Object.keys(newPrediction)}`)
         const foundPredictions = await db.Prediction.find({
             user: foundUser._id
         })
-        console.log(`FOUNDPREDICTION: ${foundPrediction}`)
+        console.log(`FOUNDPREDICTION: ${foundPredictions}`)
         expect(newPrediction).to.exist
         expect(foundPredictions).to.have.lengthOf(1)
     })
@@ -54,14 +52,20 @@ describe('PREDICTIONS: GET route for /:id', () => {
                 email: 'victoria@email.com',
                 password: 'victoria1234'
             })
+        console.log(`LOGGEDUSER: ${loggedUser}`)
+        console.log(`LOGGEDUSER.BODY.TOKEN: ${loggedUser.body.token}`)
         const foundUser = await db.User.findOne({
             email: 'victoria@email.com'
+        })
+        console.log(`FOUNDUSER: ${foundUser}`)
+        const foundPrediction = await db.Prediction.findOne({
+            user: foundUser._id
         })
         const getPrediction = await request(app)
             .get(`/predictions/${foundUser._id}`)
             .set('Authorization', loggedUser.body.token)
         let matchPredictions
-        if (getPrediction.body.prediction._id == foundUser._id) {
+        if (getPrediction.body.prediction._id == foundPrediction._id) {
             matchPredictions = true
         } else {
             matchPredictions = false
