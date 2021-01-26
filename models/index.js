@@ -24,5 +24,6 @@ db.on('error', () => {
     console.log(`DATABASE ERROR: ${error}`)
 })
 
-// Require and export User
-module.exports.User = require('./User')
+// Require and export models
+module.exports.User = require('./schemas/User')
+module.exports.Prediction = require('./schemas/Prediction')
