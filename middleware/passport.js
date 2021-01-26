@@ -5,7 +5,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt
 const mongoose = require('mongoose')
 
 // Import internal model
-const User = require('../models/User')
+const User = require('../models/schemas/User')
 
 // Establish options
 const options = {}
