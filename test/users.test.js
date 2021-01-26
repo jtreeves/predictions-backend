@@ -46,8 +46,8 @@ describe('USERS: POST route for /login', () => {
             .post('/users/login')
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .send({
-                email: 'John Doe',
-                password: 'john@email.com'
+                email: 'john@email.com',
+                password: 'john1234'
             })
         expect(currentUser.status).to.equal(200)
     })
