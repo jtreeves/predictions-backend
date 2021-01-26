@@ -16,9 +16,11 @@ describe('PREDICTIONS: POST route for /:id', () => {
                 email: 'victoria@email.com',
                 password: 'victoria1234'
             })
+        console.log(`LOGGEDUSER: ${loggedUser}`)
         const foundUser = await db.User.findOne({
             email: 'victoria@email.com'
         })
+        console.log(`FOUNDUSER: ${foundUser}`)
         const newPrediction = await request(app)
             .post(`/predictions/${foundUser._id}`)
             .set('Authorization', loggedUser.body.token)
@@ -26,9 +28,11 @@ describe('PREDICTIONS: POST route for /:id', () => {
                 user: foundUser._id,
                 title: 'Q3 Profits'
             })
+        console.log(`NEWPREDICTION: ${newPrediction}`)
         const foundPredictions = await db.Budget.find({
             user: foundUser._id
         })
+        console.log(`FOUNDPREDICTION: ${foundPrediction}`)
         expect(newPrediction).to.exist
         expect(foundPredictions).to.have.lengthOf(1)
     })
