@@ -29,7 +29,7 @@ describe('PREDICTIONS: POST route for /:id', () => {
                 title: 'Q3 Profits'
             })
         console.log(`NEWPREDICTION: ${newPrediction}`)
-        const foundPredictions = await db.Budget.find({
+        const foundPredictions = await db.Prediction.find({
             user: foundUser._id
         })
         console.log(`FOUNDPREDICTION: ${foundPrediction}`)
@@ -40,7 +40,7 @@ describe('PREDICTIONS: POST route for /:id', () => {
 
 // Test GET route for predictions/:id
 describe('PREDICTIONS: GET route for /:id', () => {
-    it('displays data for a specific budget', async () => {
+    it('displays data for a specific prediction', async () => {
         const loggedUser = await request(app)
             .post('/users/login')
             .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -66,7 +66,7 @@ describe('PREDICTIONS: GET route for /:id', () => {
 
 // Test GET route for predictions/all/:id
 describe('PREDICTIONS: GET route for /all/:id', () => {
-    it('returns all budgets associated with a specific user', async () => {
+    it('returns all predictions associated with a specific user', async () => {
         const loggedUser = await request(app)
             .post('/users/login')
             .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -77,7 +77,7 @@ describe('PREDICTIONS: GET route for /all/:id', () => {
         const foundUser = await db.User.findOne({
             email: 'victoria@email.com'
         })
-        const foundPredictions = await db.Budget.find({
+        const foundPredictions = await db.Prediction.find({
             user: foundUser._id
         })
         const getPredictions = await request(app)
