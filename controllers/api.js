@@ -28,17 +28,17 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         'data_set': req.body.dataSet
     }
     console.log(`SUBMISSION: ${submission}`)
+    console.log(`SUBMISSION.TITLE: ${submission.title}`)
+    console.log(`SUBMISSION.DATA_SET: ${submission.data_set}`)
     console.log(`SUBMISSION KEYS: ${Object.keys(submission)}`)
     try {
         const foundPrediction = await db.Prediction.findOne({
             source: source
         })
         console.log(`FOUNDPREDICTION: ${foundPrediction}`)
-        console.log(`FOUNDPREDICTION KEYS: ${Object.keys(foundPrediction)}`)
-        console.log(`FOUNDPREDICTION._ID: ${foundPrediction._id}`)
-        if (foundPrediction._id) {
-            return false
-        } else {
+        // console.log(`FOUNDPREDICTION KEYS: ${Object.keys(foundPrediction)}`)
+        // console.log(`FOUNDPREDICTION._ID: ${foundPrediction._id}`)
+        if (foundPrediction == null) {
             try {
                 await axios.post(
                     regressionz + '?key=' + key + '&source=' + source,
@@ -55,6 +55,8 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
                 console.log(`ERROR KEYS: ${Object.keys(error)}`)
                 res.status(400).json({msg: error})
             }
+        } else {
+            return false
         }
     } catch (error) {
         console.log(`ERROR: ${error}`)
