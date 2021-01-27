@@ -5,7 +5,7 @@ const axios = require('axios')
 const passport = require('passport')
 
 // Import internal middleware
-const individuation = reqire('../middleware/individuation')
+const individuation = require('../middleware/individuation')
 
 // Import internal models
 const db = require('../models')
