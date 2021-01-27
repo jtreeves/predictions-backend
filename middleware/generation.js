@@ -3,7 +3,9 @@ const randomstring = require('randomstring')
 
 // Define function
 function generation() {
-    randomstring.generate(10)
+    const generatedString = randomstring.generate(10)
+    console.log(`GENERATEDSTRING: ${generatedString}`)
+    return generatedString
 }
 
 // Export function

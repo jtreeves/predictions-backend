@@ -10,12 +10,15 @@ async function location(testString) {
         const foundPrediction = await db.Prediction.findOne({
             source: testString
         })
+        console.log(`FOUNDPREDICTION: ${foundPrediction}`)
+        console.log(`FOUNDPREDICTION._ID: ${foundPrediction._id}`)
         if (foundPrediction._id) {
             return true
         } else {
             return false
         }
     } catch (error) {
+        console.log(`LOCATION ERROR: ${error}`)
         alert(error)
     }
 }
