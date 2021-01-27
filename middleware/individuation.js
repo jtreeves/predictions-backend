@@ -7,6 +7,7 @@ function individuation() {
     console.log(`RANDOMSTRING: ${randomString}`)
     const locatedValue = location(randomString)
     console.log(`LOCATEDVALUE: ${locatedValue}`)
+    console.log(`LOCATEDVALUE KEYS: ${Object.keys(locatedValue)}`)
     if (locatedValue) {
         return individuation()
     } else {
