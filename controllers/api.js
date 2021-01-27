@@ -17,8 +17,8 @@ const regressionz = 'https://regressionz.herokuapp.com/api'
 // Create router
 const router = express.Router()
 
-// Create GET route for api/ (Private)
-router.get('/', passport.authenticate('jwt', {session: false}), async (req, res) => {
+// Create POST route for api/ (Private)
+router.post('/', passport.authenticate('jwt', {session: false}), async (req, res) => {
     const source = individuation()
     console.log(`SOURCE: ${source}`)
     const submission = {
