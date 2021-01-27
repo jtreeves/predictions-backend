@@ -47,7 +47,9 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
             regressionz + '?key=' + key + '&source=' + source
         )
         console.log(`RECEIVEDREGRESSIONS: ${receivedRegressions}`)
+        console.log(`RECEIVEDREGRESSIONS.DATA: ${receivedRegressions.data}`)
         console.log(`RECEIVEDREGRESSIONS KEYS: ${Object.keys(receivedRegressions)}`)
+        console.log(`RECEIVEDREGRESSIONS.DATA KEYS: ${Object.keys(receivedRegressions.data)}`)
         res.status(200).json({regressions: receivedRegressions})
     } else {
         return false
