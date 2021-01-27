@@ -20,12 +20,15 @@ const router = express.Router()
 // Create GET route for api/ (Private)
 router.get('/', passport.authenticate('jwt', {session: false}), async (req, res) => {
     const source = individuation()
+    console.log(`SOURCE: ${source}`)
     const submission = {
         'title': req.body.title,
         'independent': req.body.independent,
         'dependent': req.body.dependent,
         'data_set': req.body.dataSet
     }
+    console.log(`SUBMISSION: ${submission}`)
+    console.log(`SUBMISSION KEYS: ${Object.keys(submission)}`)
     try {
         await axios.post(
             regressionz + '?key=' + key + '&source=' + source,
@@ -34,8 +37,12 @@ router.get('/', passport.authenticate('jwt', {session: false}), async (req, res)
         const receivedRegressions = await axios.get(
             regressionz + '?key=' + key + '&source=' + source
         )
+        console.log(`RECEIVEDREGRESSIONS: ${receivedRegressions}`)
+        console.log(`RECEIVEDREGRESSIONS KEYS: ${Object.keys(receivedRegressions)}`)
         res.status(200).json({regressions: receivedRegressions})
     } catch (error) {
+        console.log(`ERROR: ${error}`)
+        console.log(`ERROR KEYS: ${Object.keys(error)}`)
         res.status(400).json({msg: error})
     }
 })
