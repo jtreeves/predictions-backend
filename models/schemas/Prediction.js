@@ -12,13 +12,13 @@ const noteSchema = require('./subschemas/Note')
 const predictionSchema = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     source: String,
-    date: {
-        type: Date,
-        default: Date.now()
-    },
     sections: {
         favorite: favoriteSchema,
         note: noteSchema
+    },
+    date: {
+        type: Date,
+        default: Date.now()
     }
 })
 

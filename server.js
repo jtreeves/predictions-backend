@@ -5,7 +5,7 @@ const app = express()
 const cors = require('cors')
 const passport = require('passport')
 
-// Import internal configuration
+// Import internal middleware
 require('./middleware/authentication')(passport)
 
 // Import internal controllers

@@ -24,8 +24,7 @@ describe('PREDICTIONS: POST route for /:id', () => {
             .set('Authorization', loggedUser.body.token)
             .send({
                 user: foundUser._id,
-                regression: 1,
-                title: 'Q3 Profits',
+                source: 'abc123',
                 sections: {
                     favorite: {graph: 'cubic'},
                     note: {comments: 'I like this'}

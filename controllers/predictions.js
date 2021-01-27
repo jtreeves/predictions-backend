@@ -15,8 +15,7 @@ router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, 
     try {
         const newPrediction = await db.Prediction.create({
             user: req.params.id,
-            regression: req.body.regression,
-            title: req.body.title,
+            source: req.body.source,
             sections: {
                 favorite: {graph: favorite.graph},
                 note: {comments: note.comments}
