@@ -39,27 +39,22 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         // console.log(`FOUNDPREDICTION KEYS: ${Object.keys(foundPrediction)}`)
         // console.log(`FOUNDPREDICTION._ID: ${foundPrediction._id}`)
         if (foundPrediction == null) {
-            try {
-                await axios.post(
-                    regressionz + '?key=' + key + '&source=' + source,
-                    submission
-                )
-                const receivedRegressions = await axios.get(
-                    regressionz + '?key=' + key + '&source=' + source
-                )
-                console.log(`RECEIVEDREGRESSIONS: ${receivedRegressions}`)
-                console.log(`RECEIVEDREGRESSIONS KEYS: ${Object.keys(receivedRegressions)}`)
-                res.status(200).json({regressions: receivedRegressions})
-            } catch (error) {
-                console.log(`ERROR: ${error}`)
-                console.log(`ERROR KEYS: ${Object.keys(error)}`)
-                res.status(400).json({msg: error})
-            }
+            await axios.post(
+                regressionz + '?key=' + key + '&source=' + source,
+                submission
+            )
+            const receivedRegressions = await axios.get(
+                regressionz + '?key=' + key + '&source=' + source
+            )
+            console.log(`RECEIVEDREGRESSIONS: ${receivedRegressions}`)
+            console.log(`RECEIVEDREGRESSIONS KEYS: ${Object.keys(receivedRegressions)}`)
+            res.status(200).json({regressions: receivedRegressions})
         } else {
             return false
         }
     } catch (error) {
         console.log(`ERROR: ${error}`)
+        console.log(`ERROR KEYS: ${Object.keys(error)}`)
         res.status(400).json({msg: error})
     }
 })
