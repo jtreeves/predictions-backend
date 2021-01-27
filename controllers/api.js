@@ -12,7 +12,7 @@ const generation = require('../middleware/generation')
 
 // Define constants
 const key = process.env.REGRESSIONZ_API_KEY
-const regressionz = 'https://regressionz.herokuapp.com/api'
+const regressionz = 'http://regressionz.herokuapp.com/api'
 
 // Create router
 const router = express.Router()
