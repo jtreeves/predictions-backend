@@ -11,6 +11,7 @@ require('./middleware/authentication')(passport)
 // Import internal controllers
 const users = require('./controllers/users')
 const predictions = require('./controllers/predictions')
+const api = require('./controllers/api')
 
 // Use external middleware
 app.use(cors())
@@ -21,6 +22,7 @@ app.use(passport.initialize())
 // Use internal controllers
 app.use('/users', users)
 app.use('/predictions', predictions)
+app.use('/api', api)
 
 // Get home route
 app.get('/', (req, res) => {
