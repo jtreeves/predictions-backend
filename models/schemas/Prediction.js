@@ -11,8 +11,7 @@ const noteSchema = require('./subschemas/Note')
 // Create Prediction Schema
 const predictionSchema = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    regression: Number,
-    title: String,
+    source: String,
     date: {
         type: Date,
         default: Date.now()
