@@ -39,6 +39,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         // console.log(`FOUNDPREDICTION KEYS: ${Object.keys(foundPrediction)}`)
         // console.log(`FOUNDPREDICTION._ID: ${foundPrediction._id}`)
         if (foundPrediction == null) {
+            console.log('INSIDE IF BLOCK')
             await axios.post(
                 regressionz + '?key=' + key + '&source=' + source,
                 submission
