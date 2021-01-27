@@ -12,7 +12,7 @@ const generation = require('../middleware/generation')
 
 // Define constants
 const key = process.env.REGRESSIONZ_API_KEY
-const regressionz = 'http://regressionz.herokuapp.com/api'
+const regressionz = 'https://regressionz.herokuapp.com/api'
 
 // Create router
 const router = express.Router()
@@ -25,7 +25,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         'title': req.body.title,
         'independent': req.body.independent,
         'dependent': req.body.dependent,
-        'data_set': req.body.dataSet
+        'data_set': JSON.parse(req.body.dataSet)
     }
     console.log(`SUBMISSION: ${submission}`)
     console.log(`SUBMISSION.TITLE: ${submission.title}`)
