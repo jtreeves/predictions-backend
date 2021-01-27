@@ -31,7 +31,10 @@ router.get('/', passport.authenticate('jwt', {session: false}), async (req, res)
             regressionz + '?key=' + key + '&source=' + source,
             submission
         )
-        res.status(200).json({msg: 'Data sent to API'})
+        const receivedRegressions = await axios.get(
+            regressionz + '?key=' + key + '&source=' + source
+        )
+        res.status(200).json({regressions: receivedRegressions})
     } catch (error) {
         res.status(400).json({msg: error})
     }
