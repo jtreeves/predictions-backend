@@ -1,22 +1,22 @@
 {
-    "name": "mern-auth-backend",
+    "name": "tiresias-backend",
     "version": "1.0.0",
-    "description": "This is a codealong for MERN Auth",
+    "description": "Backend for the Tiresias app for predictions",
     "main": "server.js",
     "scripts": {
         "start": "node server.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jtreeves/mern-auth-backend.git"
+        "url": "git+https://github.com/jtreeves/predictions-backend.git"
     },
     "keywords": [],
     "author": "Jackson Reeves",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/jtreeves/mern-auth-backend/issues"
+        "url": "https://github.com/jtreeves/predictions-backend/issues"
     },
-    "homepage": "https://github.com/jtreeves/mern-auth-backend#readme",
+    "homepage": "https://github.com/jtreeves/predictions-backend#readme",
     "dependencies": {
         "alert": "^5.0.10",
         "axios": "^0.21.0",
