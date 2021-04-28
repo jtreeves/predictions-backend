@@ -105,5 +105,29 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), async (req, r
     }
 })
 
+// Create PUT route for users/:id (Private)
+router.put('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    try {
+        const updatedUser = await db.User.updateOne(
+            {_id: req.params.id},
+            {$set: {name: req.body.newName}}
+        )
+        res.status(200).json({user: updatedUser})
+    } catch(error) {
+        res.status(400).json({msg: error})
+    }
+})
+
+// Create DELETE route for users/:id (Private)
+router.delete('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    try {
+        await db.Prediction.deleteMany({user: req.params.id})
+        await db.User.deleteOne({_id: req.params.id})
+        res.status(200).json({msg: 'User deleted'})
+    } catch(error) {
+        res.status(400).json({msg: error})
+    }
+})
+
 // Export router
 module.exports = router
