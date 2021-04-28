@@ -8,7 +8,7 @@ const Schema = mongoose.Schema
 const favoriteSchema = new Schema({
     graph: { 
         type: String, 
-        default: {} 
+        default: ''
     },
     date: {
         type: Date,
