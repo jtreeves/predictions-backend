@@ -110,7 +110,7 @@ router.put('/:id', passport.authenticate('jwt', {session: false}), async (req, r
     try {
         const updatedUser = await db.User.updateOne(
             {_id: req.params.id},
-            {$set: {name: req.body.newName}}
+            {$set: {name: req.body.name}}
         )
         res.status(200).json({user: updatedUser})
     } catch(error) {
