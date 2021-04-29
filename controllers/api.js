@@ -44,5 +44,13 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
     }
 })
 
+// Create GET route for api/ (Private)
+router.get('/', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    const receivedRegressions = await axios.get(
+        regressionz + '?key=' + key + '&source=' + req.body.source
+    )
+    res.status(200).json({regressions: receivedRegressions.data})
+})
+
 // Export router
 module.exports = router
