@@ -39,13 +39,11 @@ router.get('/all/:id', passport.authenticate('jwt', {session: false}), async (re
     }
 })
 
-// Create GET route for predictions/:id
-router.get('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
+// Create DELETE route for predictions/:id
+router.delete('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
-        const currentPrediction = await db.Prediction.findOne({
-            _id: req.params.id
-        })
-        res.status(200).json({prediction: currentPrediction})
+        await db.Prediction.deleteOne({source: req.params.source})
+        res.status(200).json({msg: 'Predictions deleted'})
     } catch(error) {
         res.status(400).json({msg: error})
     }
