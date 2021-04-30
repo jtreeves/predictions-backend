@@ -11,15 +11,10 @@ const router = express.Router()
 
 // Create POST route for predictions/:id
 router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
-    const { favorite, note } = req.body.sections
     try {
         const newPrediction = await db.Prediction.create({
             user: req.params.id,
-            source: req.body.source,
-            sections: {
-                favorite: {graph: favorite.graph},
-                note: {comments: note.comments}
-            }
+            source: req.body.source
         })
         res.status(200).json({prediction: newPrediction})
     } catch(error) {
