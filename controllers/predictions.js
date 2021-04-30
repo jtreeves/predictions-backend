@@ -47,6 +47,19 @@ router.put('/:source/favorite', passport.authenticate('jwt', {session: false}), 
     }
 })
 
+// Create PUT route for predictions/:source/note
+router.put('/:source/note', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    try {
+        const updatedPredictions = await db.Prediction.updateOne(
+            {source: req.params.source},
+            {$set: {note: req.body.note}}
+        )
+        res.status(200).json({predictions: updatedPredictions})
+    } catch(error) {
+        res.status(400).json({msg: error})
+    }
+})
+
 // Create DELETE route for predictions/:source
 router.delete('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
