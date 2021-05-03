@@ -24,8 +24,8 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         'title': req.body.title,
         'independent': req.body.independent,
         'dependent': req.body.dependent,
-        'precision': parseInt(req.body.precision),
-        'data_set': JSON.parse(req.body.dataSet)
+        'precision': req.body.precision,
+        'data_set': req.body.dataSet
     }
     const foundPrediction = await db.Prediction.findOne({
         source: source
