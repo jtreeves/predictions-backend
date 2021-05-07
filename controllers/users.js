@@ -105,12 +105,25 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), async (req, r
     }
 })
 
-// Create PUT route for users/:id (Private)
-router.put('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
+// Create PUT route for users/:id/name (Private)
+router.put('/:id/name', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
         const updatedUser = await db.User.updateOne(
             {_id: req.params.id},
             {$set: {name: req.body.name}}
+        )
+        res.status(200).json({user: updatedUser})
+    } catch(error) {
+        res.status(400).json({msg: error})
+    }
+})
+
+// Create PUT route for users/:id/email (Private)
+router.put('/:id/email', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    try {
+        const updatedUser = await db.User.updateOne(
+            {_id: req.params.id},
+            {$set: {email: req.body.email}}
         )
         res.status(200).json({user: updatedUser})
     } catch(error) {
