@@ -49,7 +49,7 @@ router.post('/signup', async (req, res) => {
                 })
             })
         }
-    } catch(error) {
+    } catch (error) {
         console.log(`SIGNUP ERROR: ${error}`)
     }
 })
@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
                 return res.status(400).json({msg: 'Password is incorrect'})
             }
         }
-    } catch(error) {
+    } catch (error) {
         console.log(`LOGIN ERROR: ${error}`)
     }
 })
@@ -100,7 +100,7 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), async (req, r
             _id: req.params.id
         })
         res.status(200).json({user: currentUser})
-    } catch(error) {
+    } catch (error) {
         res.status(400).json({msg: error})
     }
 })
@@ -113,7 +113,7 @@ router.put('/:id/name', passport.authenticate('jwt', {session: false}), async (r
             {$set: {name: req.body.name}}
         )
         res.status(200).json({user: updatedUser})
-    } catch(error) {
+    } catch (error) {
         res.status(400).json({msg: error})
     }
 })
@@ -126,7 +126,7 @@ router.put('/:id/email', passport.authenticate('jwt', {session: false}), async (
             {$set: {email: req.body.email}}
         )
         res.status(200).json({user: updatedUser})
-    } catch(error) {
+    } catch (error) {
         res.status(400).json({msg: error})
     }
 })
@@ -137,7 +137,7 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), async (req
         await db.Prediction.deleteMany({user: req.params.id})
         await db.User.deleteOne({_id: req.params.id})
         res.status(200).json({msg: 'User deleted'})
-    } catch(error) {
+    } catch (error) {
         res.status(400).json({msg: error})
     }
 })
