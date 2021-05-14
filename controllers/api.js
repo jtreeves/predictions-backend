@@ -46,6 +46,8 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         } catch (error) {
             res.status(400).json({msg: error})
         }
+    } else {
+        res.status(403).json({msg: 'Title, independent, dependent, precision, and dataSet fields are all required'})
     }
 })
 
@@ -61,6 +63,8 @@ router.get('/:source', passport.authenticate('jwt', {session: false}), async (re
         } catch (error) {
             res.status(400).json({msg: error})
         }
+    } else {
+        res.status(403).json({msg: 'Source must be provided'})
     }
 })
 
