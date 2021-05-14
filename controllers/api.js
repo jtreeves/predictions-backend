@@ -34,14 +34,18 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         submission['data_set']
     ) {
         const source = individuation()
-        await axios.post(
-            regressionz + '?key=' + key + '&source=' + source,
-            submission
-        )
-        const receivedRegressions = await axios.get(
-            regressionz + '?key=' + key + '&source=' + source
-        )
-        res.status(200).json({regressions: receivedRegressions.data})
+        try {
+            await axios.post(
+                regressionz + '?key=' + key + '&source=' + source,
+                submission
+            )
+            const receivedRegressions = await axios.get(
+                regressionz + '?key=' + key + '&source=' + source
+            )
+            res.status(200).json({regressions: receivedRegressions.data})
+        } catch (error) {
+            res.status(400).json({msg: error})
+        }
     }
 })
 
@@ -49,10 +53,14 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
 router.get('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
     const source = req.params.source
     if (source) {
-        const receivedRegressions = await axios.get(
-            regressionz + '?key=' + key + '&source=' + source
-        )
-        res.status(200).json({regressions: receivedRegressions.data})
+        try {
+            const receivedRegressions = await axios.get(
+                regressionz + '?key=' + key + '&source=' + source
+            )
+            res.status(200).json({regressions: receivedRegressions.data})
+        } catch (error) {
+            res.status(400).json({msg: error})
+        }
     }
 })
 
