@@ -16,7 +16,7 @@ router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, 
             user: req.params.id,
             source: req.body.source
         })
-        res.status(200).json({prediction: newPrediction})
+        res.status(201).json({prediction: newPrediction})
     } catch (error) {
         res.status(400).json({msg: error})
     }
@@ -41,7 +41,7 @@ router.put('/:source/favorite', passport.authenticate('jwt', {session: false}), 
             {source: req.params.source},
             {$set: {favorite: req.body.favorite}}
         )
-        res.status(200).json({predictions: updatedPredictions})
+        res.status(204).json({predictions: updatedPredictions})
     } catch (error) {
         res.status(400).json({msg: error})
     }
@@ -54,7 +54,7 @@ router.put('/:source/note', passport.authenticate('jwt', {session: false}), asyn
             {source: req.params.source},
             {$set: {note: req.body.note}}
         )
-        res.status(200).json({predictions: updatedPredictions})
+        res.status(204).json({predictions: updatedPredictions})
     } catch (error) {
         res.status(400).json({msg: error})
     }
@@ -64,7 +64,7 @@ router.put('/:source/note', passport.authenticate('jwt', {session: false}), asyn
 router.delete('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
         await db.Prediction.deleteOne({source: req.params.source})
-        res.status(200).json({msg: 'Predictions deleted'})
+        res.status(204).json({msg: 'Predictions deleted'})
     } catch (error) {
         res.status(400).json({msg: error})
     }

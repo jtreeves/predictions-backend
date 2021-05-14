@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
         })
         if (currentUser) {
             // Send 400 response if email already in use
-            return res.status(400).json({msg: 'Email already in use'})
+            return res.status(409).json({msg: 'Email already in use'})
         } else {
             // Create new user if email not already in use
             const newUser = new db.User({
@@ -42,7 +42,7 @@ router.post('/signup', async (req, res) => {
                         newUser.password = hash
                         // Save new user with hashed password
                         const createdUser = await newUser.save()
-                        res.status(200).json(createdUser)
+                        res.status(201).json(createdUser)
                     } catch(error) {
                         console.log(`HASHING ERROR: ${error}`)
                     }
@@ -50,7 +50,7 @@ router.post('/signup', async (req, res) => {
             })
         }
     } catch (error) {
-        console.log(`SIGNUP ERROR: ${error}`)
+        res.status(400).json({msg: error})
     }
 })
 
@@ -64,7 +64,7 @@ router.post('/login', async (req, res) => {
         const currentUser = await db.User.findOne({email})
         if (!currentUser) {
             // Send 400 response if user does not exist
-            res.status(400).json({msg: 'User not found'})
+            res.status(404).json({msg: 'User not found'})
         } else {
             // Log in user if user exists
             const isMatch = await bcrypt.compare(password, currentUser.password)
@@ -78,18 +78,18 @@ router.post('/login', async (req, res) => {
                 }
                 // Sign token to finalize login
                 jwt.sign(payload, JWT_SECRET, {expiresIn: '1h'}, (error, token) => {
-                    res.json({
+                    res.status(201).json({
                         success: true,
                         token: `Bearer ${token}`
                     })
                 })
             } else {
                 // Send 400 response if no match
-                return res.status(400).json({msg: 'Password is incorrect'})
+                return res.status(401).json({msg: 'Password is incorrect'})
             }
         }
     } catch (error) {
-        console.log(`LOGIN ERROR: ${error}`)
+        res.status(400).json({msg: error})
     }
 })
 
@@ -112,7 +112,7 @@ router.put('/:id/name', passport.authenticate('jwt', {session: false}), async (r
             {_id: req.params.id},
             {$set: {name: req.body.name}}
         )
-        res.status(200).json({user: updatedUser})
+        res.status(204).json({user: updatedUser})
     } catch (error) {
         res.status(400).json({msg: error})
     }
@@ -125,7 +125,7 @@ router.put('/:id/email', passport.authenticate('jwt', {session: false}), async (
             {_id: req.params.id},
             {$set: {email: req.body.email}}
         )
-        res.status(200).json({user: updatedUser})
+        res.status(204).json({user: updatedUser})
     } catch (error) {
         res.status(400).json({msg: error})
     }
@@ -136,7 +136,7 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), async (req
     try {
         await db.Prediction.deleteMany({user: req.params.id})
         await db.User.deleteOne({_id: req.params.id})
-        res.status(200).json({msg: 'User deleted'})
+        res.status(204).json({msg: 'User deleted'})
     } catch (error) {
         res.status(400).json({msg: error})
     }

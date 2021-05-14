@@ -42,7 +42,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
             const receivedRegressions = await axios.get(
                 regressionz + '?key=' + key + '&source=' + source
             )
-            res.status(200).json({regressions: receivedRegressions.data})
+            res.status(201).json({regressions: receivedRegressions.data})
         } catch (error) {
             res.status(400).json({msg: error})
         }
