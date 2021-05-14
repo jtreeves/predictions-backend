@@ -27,29 +27,41 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         'precision': req.body.precision,
         'data_set': req.body.dataSet
     }
-    const foundPrediction = await db.Prediction.findOne({
-        source: source
-    })
-    if (foundPrediction == null) {
-        await axios.post(
-            regressionz + '?key=' + key + '&source=' + source,
-            submission
-        )
-        const receivedRegressions = await axios.get(
-            regressionz + '?key=' + key + '&source=' + source
-        )
-        res.status(200).json({regressions: receivedRegressions.data})
-    } else {
-        return false
+    if (
+        source && 
+        submission['title'] && 
+        submission['independent'] && 
+        submission['dependent'] && 
+        submission['precision'] && 
+        submission['data_set']
+    ) {
+        const foundPrediction = await db.Prediction.findOne({
+            source: source
+        })
+        if (!foundPrediction) {
+            await axios.post(
+                regressionz + '?key=' + key + '&source=' + source,
+                submission
+            )
+            const receivedRegressions = await axios.get(
+                regressionz + '?key=' + key + '&source=' + source
+            )
+            res.status(200).json({regressions: receivedRegressions.data})
+        } else {
+            return false
+        }
     }
 })
 
 // Create GET route for api/ (Private)
 router.get('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
-    const receivedRegressions = await axios.get(
-        regressionz + '?key=' + key + '&source=' + req.params.source
-    )
-    res.status(200).json({regressions: receivedRegressions.data})
+    const source = req.params.source
+    if (source) {
+        const receivedRegressions = await axios.get(
+            regressionz + '?key=' + key + '&source=' + source
+        )
+        res.status(200).json({regressions: receivedRegressions.data})
+    }
 })
 
 // Export router
