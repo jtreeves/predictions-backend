@@ -6,10 +6,10 @@ async function individuation() {
     const foundPrediction = await db.Prediction.findOne({
         source: source
     })
-    if (foundPrediction) {
+    if (foundPrediction || !source) {
         individuation()
     } else {
-        return true
+        return source
     }
 }
 

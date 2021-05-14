@@ -8,7 +8,7 @@ const passport = require('passport')
 const db = require('../models')
 
 // Import internal middleware
-const generation = require('../middleware/generation')
+const individuation = require('../middleware/individuation')
 
 // Define constants
 const key = process.env.REGRESSIONZ_API_KEY
@@ -19,7 +19,6 @@ const router = express.Router()
 
 // Create POST route for api/ (Private)
 router.post('/', passport.authenticate('jwt', {session: false}), async (req, res) => {
-    const source = generation()
     const submission = {
         'title': req.body.title,
         'independent': req.body.independent,
@@ -28,28 +27,21 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         'data_set': req.body.dataSet
     }
     if (
-        source && 
         submission['title'] && 
         submission['independent'] && 
         submission['dependent'] && 
         submission['precision'] && 
         submission['data_set']
     ) {
-        const foundPrediction = await db.Prediction.findOne({
-            source: source
-        })
-        if (!foundPrediction) {
-            await axios.post(
-                regressionz + '?key=' + key + '&source=' + source,
-                submission
-            )
-            const receivedRegressions = await axios.get(
-                regressionz + '?key=' + key + '&source=' + source
-            )
-            res.status(200).json({regressions: receivedRegressions.data})
-        } else {
-            return false
-        }
+        const source = individuation()
+        await axios.post(
+            regressionz + '?key=' + key + '&source=' + source,
+            submission
+        )
+        const receivedRegressions = await axios.get(
+            regressionz + '?key=' + key + '&source=' + source
+        )
+        res.status(200).json({regressions: receivedRegressions.data})
     }
 })
 
