@@ -20,9 +20,7 @@ router.post('/signup', async (req, res) => {
         const currentUser = await db.User.findOne({
             email: req.body.email
         })
-        if (currentUser) {
-            res.status(409).json({msg: 'Email already in use'})
-        } else {
+        if (!currentUser) {
             const newUser = new db.User({
                 name: req.body.name,
                 email: req.body.email,
@@ -41,6 +39,8 @@ router.post('/signup', async (req, res) => {
                     }
                 })
             })
+        } else {
+            res.status(409).json({msg: 'Email already in use'})
         }
     } catch (error) {
         res.status(400).json({msg: error})
@@ -53,9 +53,7 @@ router.post('/login', async (req, res) => {
         const email = req.body.email
         const password = req.body.password
         const currentUser = await db.User.findOne({email})
-        if (!currentUser) {
-            res.status(404).json({msg: 'User not found'})
-        } else {
+        if (currentUser) {
             const isMatch = await bcrypt.compare(
                 password, currentUser.password
             )
@@ -74,6 +72,8 @@ router.post('/login', async (req, res) => {
             } else {
                 res.status(401).json({msg: 'Password is incorrect'})
             }
+        } else {
+            res.status(404).json({msg: 'User not found'})
         }
     } catch (error) {
         res.status(400).json({msg: error})
