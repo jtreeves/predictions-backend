@@ -33,7 +33,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
         submission['precision'] && 
         submission['data_set']
     ) {
-        const source = individuation()
+        const source = await individuation()
         try {
             await axios.post(
                 regressionz + '?key=' + key + '&source=' + source,
