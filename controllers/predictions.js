@@ -41,7 +41,7 @@ router.put('/:source/favorite', passport.authenticate('jwt', {session: false}), 
             {source: req.params.source},
             {$set: {favorite: req.body.favorite}}
         )
-        res.status(204).json({predictions: updatedPredictions})
+        res.status(200).json({predictions: updatedPredictions})
     } catch (error) {
         res.status(400).json({msg: error})
     }
@@ -54,7 +54,7 @@ router.put('/:source/note', passport.authenticate('jwt', {session: false}), asyn
             {source: req.params.source},
             {$set: {note: req.body.note}}
         )
-        res.status(204).json({predictions: updatedPredictions})
+        res.status(200).json({predictions: updatedPredictions})
     } catch (error) {
         res.status(400).json({msg: error})
     }
