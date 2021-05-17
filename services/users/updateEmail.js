@@ -8,7 +8,7 @@ async function updateEmail(id, email) {
         )
         return updatedUser
     } catch (error) {
-        return error
+        throw error
     }
 }
 

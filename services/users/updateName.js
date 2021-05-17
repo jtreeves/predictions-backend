@@ -8,7 +8,7 @@ async function updateName(id, name) {
         )
         return updatedUser
     } catch (error) {
-        return error
+        throw error
     }
 }
 

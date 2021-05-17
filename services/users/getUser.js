@@ -7,7 +7,7 @@ async function getUser(id) {
         })
         return currentUser
     } catch (error) {
-        return error
+        throw error
     }
 }
 

@@ -12,7 +12,7 @@ async function deleteUser(id) {
         await db.User.deleteOne({_id: id})
         return 'User deleted'
     } catch (error) {
-        return error
+        throw error
     }
 }
 
