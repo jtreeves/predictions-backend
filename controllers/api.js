@@ -1,18 +1,14 @@
 // Import external dependencies
 require('dotenv').config()
 const express = require('express')
-const axios = require('axios')
 const passport = require('passport')
-
-// Import internal models
-const db = require('../models')
 
 // Import internal middleware
 const individuation = require('../middleware/individuation')
-
-// Define constants
-const key = process.env.REGRESSIONZ_API_KEY
-const regressionz = 'https://regressionz.herokuapp.com/api'
+const createRegressions = require('../services/api/createRegressions')
+const getRegressions = require('../services/api/getRegressions')
+const updateRegressions = require('../services/api/updateRegressions')
+const deleteRegressions = require('../services/api/deleteRegressions')
 
 // Create router
 const router = express.Router()
@@ -35,14 +31,10 @@ router.post('/', passport.authenticate('jwt', {session: false}), async (req, res
     ) {
         const source = await individuation()
         try {
-            await axios.post(
-                regressionz + '?key=' + key + '&source=' + source,
-                submission
+            const regressions = await createRegressions(
+                source, submission
             )
-            const receivedRegressions = await axios.get(
-                regressionz + '?key=' + key + '&source=' + source
-            )
-            res.status(201).json({regressions: receivedRegressions.data})
+            res.status(201).json({regressions: regressions})
         } catch (error) {
             res.status(400).json({msg: error})
         }
@@ -56,10 +48,54 @@ router.get('/:source', passport.authenticate('jwt', {session: false}), async (re
     const source = req.params.source
     if (source) {
         try {
-            const receivedRegressions = await axios.get(
-                regressionz + '?key=' + key + '&source=' + source
+            const regressions = await getRegressions(source)
+            res.status(200).json({regressions: regressions})
+        } catch (error) {
+            res.status(400).json({msg: error})
+        }
+    } else {
+        res.status(403).json({msg: 'Source must be provided'})
+    }
+})
+
+// Create PUT route for api/ (Private)
+router.put('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    const source = req.params.source
+    const submission = {
+        'title': req.body.title,
+        'independent': req.body.independent,
+        'dependent': req.body.dependent,
+        'precision': req.body.precision,
+        'data_set': req.body.dataSet
+    }
+    if (
+        source &&
+        submission['title'] && 
+        submission['independent'] && 
+        submission['dependent'] && 
+        submission['precision'] && 
+        submission['data_set']
+    ) {
+        try {
+            const regressions = await updateRegressions(
+                source, submission
             )
-            res.status(200).json({regressions: receivedRegressions.data})
+            res.status(200).json({regressions: regressions})
+        } catch (error) {
+            res.status(400).json({msg: error})
+        }
+    } else {
+        res.status(403).json({msg: 'Title, independent, dependent, precision, and dataSet fields are all required, and source must be provided'})
+    }
+})
+
+// Create DELETE route for api/ (Private)
+router.delete('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    const source = req.params.source
+    if (source) {
+        try {
+            const deletion = await deleteRegressions(source)
+            res.status(204).json({msg: deletion})
         } catch (error) {
             res.status(400).json({msg: error})
         }
