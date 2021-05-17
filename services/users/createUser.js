@@ -26,7 +26,7 @@ async function createUser(name, email, password) {
                 })
             })
         } else {
-            return 'Email already in use'
+            throw { code: 409, message: 'Email already in use' }
         }
     } catch (error) {
         return error

@@ -1,9 +1,7 @@
 const db = require('../../models')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const JWT_SECRET = process.env.JWT_SECRET
 
-function createSession(email, password) {
+async function createPayload(email, password) {
     try {
         const currentUser = await db.User.findOne({email})
         if (currentUser) {
@@ -16,12 +14,7 @@ function createSession(email, password) {
                     email: currentUser.email,
                     name: currentUser.name
                 }
-                jwt.sign(payload, JWT_SECRET, {expiresIn: '1h'}, (error, token) => {
-                    return {
-                        success: true,
-                        token: `Bearer ${token}`
-                    }
-                })
+                return payload
             } else {
                 return 'Password is incorrect'
             }
@@ -33,4 +26,4 @@ function createSession(email, password) {
     }
 }
 
-module.exports = createSession
+module.exports = createPayload

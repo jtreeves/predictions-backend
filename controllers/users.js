@@ -3,11 +3,14 @@ require('dotenv').config()
 const express = require('express')
 const passport = require('passport')
 const createUser = require('../services/users/createUser')
-const createSession = require('../services/users/createSession')
+const createPayload = require('../services/users/createPayload')
 const getUser = require('../services/users/getUser')
 const updateName = require('../services/users/updateName')
 const updateEmail = require('../services/users/updateEmail')
 const deleteUser = require('../services/users/deleteUser')
+
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = process.env.JWT_SECRET
 
 // Create router
 const router = express.Router()
@@ -25,10 +28,15 @@ router.post('/signup', async (req, res) => {
 // Create POST route for users/login (Public)
 router.post('/login', async (req, res) => {
     try {
-        const newSession = await createSession(
+        const payload = await createPayload(
             req.body.email, req.body.password
         )
-        res.status(201).json(newSession)
+        jwt.sign(payload, JWT_SECRET, {expiresIn: '1h'}, (error, token) => {
+            res.status(201).json({
+                success: true,
+                token: `Bearer ${token}`
+            })
+        })
     } catch (error) {
         res.status(400).json({msg: error})
     }
