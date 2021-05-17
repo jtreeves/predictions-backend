@@ -8,7 +8,7 @@ async function updateFavorite(source, favorite) {
         )
         return updatedPredictions
     } catch (error) {
-        return error
+        throw error
     }
 }
 

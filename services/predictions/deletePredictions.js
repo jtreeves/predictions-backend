@@ -8,7 +8,7 @@ async function deletePredictions(source) {
         await db.Prediction.deleteOne({source: source})
         return 'Predictions deleted'
     } catch (error) {
-        return error
+        throw error
     }
 }
 

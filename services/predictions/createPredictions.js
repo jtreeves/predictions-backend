@@ -8,7 +8,7 @@ async function createPredictions(id, source) {
         })
         return predictions
     } catch (error) {
-        return error
+        throw error
     }
 }
 

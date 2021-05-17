@@ -8,7 +8,7 @@ async function updateNote(source, note) {
         )
         return updatedPredictions
     } catch (error) {
-        return error
+        throw error
     }
 }
 

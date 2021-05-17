@@ -9,7 +9,7 @@ async function deleteRegressions(source) {
         )
         return 'Regressions deleted'
     } catch (error) {
-        return error
+        throw error
     }
 }
 

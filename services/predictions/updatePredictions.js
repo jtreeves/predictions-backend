@@ -11,7 +11,7 @@ async function updatedPredictions(source, submission, favorite, note) {
         const regressions = await updateRegressions(source, submission)
         return { predictions, regressions }
     } catch (error) {
-        return error
+        throw error
     }
 }
 

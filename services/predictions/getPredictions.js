@@ -10,7 +10,7 @@ async function getPredictions(source) {
         const regressions = await getRegressions(source)
         return { predictions, regressions }
     } catch (error) {
-        return error
+        throw error
     }
 }
 

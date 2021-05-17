@@ -10,7 +10,7 @@ async function createRegressions(source, submission) {
         )
         return regressions.data
     } catch (error) {
-        return error
+        throw error
     }
 }
 

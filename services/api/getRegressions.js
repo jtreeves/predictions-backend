@@ -9,7 +9,7 @@ async function getRegressions(source) {
         )
         return regressions.data
     } catch (error) {
-        return error
+        throw error
     }
 }
 

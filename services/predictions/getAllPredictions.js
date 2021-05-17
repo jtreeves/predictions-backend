@@ -7,7 +7,7 @@ async function getAllPredictions(id) {
         })
         return allPredictions
     } catch (error) {
-        return error
+        throw error
     }
 }
 
