@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
         const newUser = await createUser(req.body.name, req.body.email, req.body.password)
         res.status(201).json({user: newUser})
     } catch (error) {
-        res.status(400).json({msg: error})
+        res.status(error.code).json({msg: error.message})
     }
 })
 
@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
             })
         })
     } catch (error) {
-        res.status(400).json({msg: error})
+        res.status(error.code).json({msg: error.message})
     }
 })
 

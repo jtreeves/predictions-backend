@@ -16,13 +16,19 @@ async function createPayload(email, password) {
                 }
                 return payload
             } else {
-                return 'Password is incorrect'
+                throw {
+                    code: 401,
+                    message: 'Password is incorrect'
+                }
             }
         } else {
-            return 'User not found'
+            throw {
+                code: 404,
+                message: 'User not found'
+            }
         }
     } catch (error) {
-        return error
+        throw error
     }
 }
 

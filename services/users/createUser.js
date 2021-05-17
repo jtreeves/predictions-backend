@@ -21,15 +21,21 @@ async function createUser(name, email, password) {
                         const createdUser = await newUser.save()
                         return createdUser
                     } catch (error) {
-                        return error
+                        throw {
+                            code: 500,
+                            message: error
+                        }
                     }
                 })
             })
         } else {
-            throw { code: 409, message: 'Email already in use' }
+            throw { 
+                code: 409, 
+                message: 'Email already in use' 
+            }
         }
     } catch (error) {
-        return error
+        throw error
     }
 }
 
