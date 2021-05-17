@@ -12,7 +12,6 @@ require('./middleware/authentication')(passport)
 const users = require('./controllers/users')
 const predictions = require('./controllers/predictions')
 const api = require('./controllers/api')
-const throwPractice = require('./controllers/throw')
 
 // Use external middleware
 app.use(cors())
@@ -24,7 +23,6 @@ app.use(passport.initialize())
 app.use('/users', users)
 app.use('/predictions', predictions)
 app.use('/api', api)
-app.use('/throw', throwPractice)
 
 // Get home route
 app.get('/', (req, res) => {
