@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 async function getAllPredictions(id) {
     try {
         const allPredictions = await db.Prediction.find({

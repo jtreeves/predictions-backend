@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 const updateRegressions = require("../api/updateRegressions")
 const updateFavorite = require("./updateFavorite")
 const updateNote = require("./updateNote")

@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 const deletePrediction = require("../predictions/deletePredictions")
 const getAllPredictions = require("../predictions/getAllPredictions")
 

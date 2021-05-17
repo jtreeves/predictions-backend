@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 const getRegressions = require("../api/getRegressions")
 
 async function getPredictions(source) {

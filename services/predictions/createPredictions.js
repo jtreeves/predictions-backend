@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 async function createPredictions(id, source) {
     try {
         const predictions = await db.Prediction.create({

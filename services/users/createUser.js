@@ -1,3 +1,6 @@
+const db = require('../../models')
+const bcrypt = require('bcryptjs')
+
 async function createUser(name, email, password) {
     try {
         const currentUser = await db.User.findOne({

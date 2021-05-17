@@ -1,3 +1,8 @@
+const db = require('../../models')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = process.env.JWT_SECRET
+
 function createSession(email, password) {
     try {
         const currentUser = await db.User.findOne({email})

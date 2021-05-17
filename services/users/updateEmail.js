@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 async function updateEmail(id, email) {
     try {
         const updatedUser = await db.User.updateOne(

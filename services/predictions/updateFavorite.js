@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 async function updateFavorite(source, favorite) {
     try {
         const updatedPredictions = await db.Prediction.updateOne(

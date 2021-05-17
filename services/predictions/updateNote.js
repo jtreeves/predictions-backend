@@ -1,3 +1,5 @@
+const db = require('../../models')
+
 async function updateNote(source, note) {
     try {
         const updatedPredictions = await db.Prediction.updateOne(

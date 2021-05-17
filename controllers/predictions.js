@@ -3,8 +3,12 @@ require('dotenv').config()
 const express = require('express')
 const passport = require('passport')
 
-// Import internal models
-const db = require('../models')
+// Import internal services
+const createPredictions = require('../services/predictions/createPredictions')
+const deletePredictions = require('../services/predictions/deletePredictions')
+const getAllPredictions = require('../services/predictions/getAllPredictions')
+const updateFavorite = require('../services/predictions/updateFavorite')
+const updateNote = require('../services/predictions/updateNote')
 
 // Create router
 const router = express.Router()
@@ -12,11 +16,10 @@ const router = express.Router()
 // Create POST route for predictions/:id
 router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
-        const newPrediction = await db.Prediction.create({
-            user: req.params.id,
-            source: req.body.source
-        })
-        res.status(201).json({prediction: newPrediction})
+        const predictions = await createPredictions(
+            req.params.id, req.params.source
+        )
+        res.status(201).json({prediction: predictions})
     } catch (error) {
         res.status(400).json({msg: error})
     }
@@ -25,9 +28,7 @@ router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, 
 // Create GET route for predictions/all/:id
 router.get('/all/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
-        const allPredictions = await db.Prediction.find({
-            user: req.params.id
-        })
+        const allPredictions = await getAllPredictions(req.params.id)
         res.status(200).json({predictions: allPredictions})
     } catch (error) {
         res.status(400).json({msg: error})
@@ -37,9 +38,8 @@ router.get('/all/:id', passport.authenticate('jwt', {session: false}), async (re
 // Create PUT route for predictions/:source/favorite
 router.put('/:source/favorite', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
-        const updatedPredictions = await db.Prediction.updateOne(
-            {source: req.params.source},
-            {$set: {favorite: req.body.favorite}}
+        const updatedPredictions = await updateFavorite(
+            req.params.source, req.body.favorite
         )
         res.status(200).json({predictions: updatedPredictions})
     } catch (error) {
@@ -50,9 +50,8 @@ router.put('/:source/favorite', passport.authenticate('jwt', {session: false}), 
 // Create PUT route for predictions/:source/note
 router.put('/:source/note', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
-        const updatedPredictions = await db.Prediction.updateOne(
-            {source: req.params.source},
-            {$set: {note: req.body.note}}
+        const updatedPredictions = await updateNote(
+            req.params.source, req.body.note
         )
         res.status(200).json({predictions: updatedPredictions})
     } catch (error) {
@@ -63,8 +62,8 @@ router.put('/:source/note', passport.authenticate('jwt', {session: false}), asyn
 // Create DELETE route for predictions/:source
 router.delete('/:source', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
-        await db.Prediction.deleteOne({source: req.params.source})
-        res.status(204).json({msg: 'Predictions deleted'})
+        const deletion = await deletePredictions(req.params.source)
+        res.status(204).json({msg: deletion})
     } catch (error) {
         res.status(400).json({msg: error})
     }
