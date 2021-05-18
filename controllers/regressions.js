@@ -5,10 +5,10 @@ const passport = require('passport')
 
 // Import internal middleware
 const individuation = require('../middleware/individuation')
-const createRegressions = require('../services/api/createRegressions')
-const getRegressions = require('../services/api/getRegressions')
-const updateRegressions = require('../services/api/updateRegressions')
-const deleteRegressions = require('../services/api/deleteRegressions')
+const createRegressions = require('../services/regressions/createRegressions')
+const getRegressions = require('../services/regressions/getRegressions')
+const updateRegressions = require('../services/regressions/updateRegressions')
+const deleteRegressions = require('../services/regressions/deleteRegressions')
 
 // Create router
 const router = express.Router()

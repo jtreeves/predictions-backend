@@ -1,5 +1,5 @@
 const db = require('../../models')
-const getRegressions = require('../api/getRegressions')
+const getRegressions = require('../regressions/getRegressions')
 
 async function getAllPredictions(id) {
     try {
