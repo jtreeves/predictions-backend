@@ -1,5 +1,5 @@
-const db = require('../../models')
 const bcrypt = require('bcryptjs')
+const db = require('../../models')
 
 async function createPayload(email, password) {
     try {

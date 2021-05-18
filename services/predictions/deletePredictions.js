@@ -1,6 +1,6 @@
 const db = require('../../models')
 
-const deleteRegressions = require("../api/deleteRegressions")
+const deleteRegressions = require('../api/deleteRegressions')
 
 async function deletePredictions(source) {
     try {
