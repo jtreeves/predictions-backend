@@ -28,8 +28,8 @@ router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, 
 // Create GET route for predictions/all/:id
 router.get('/all/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
     try {
-        const allPredictions = await getAllPredictions(req.params.id)
-        res.status(200).json({predictions: allPredictions})
+        const collatedData = await getAllPredictions(req.params.id)
+        res.status(200).json({collections: collatedData})
     } catch (error) {
         res.status(400).json({msg: error})
     }
