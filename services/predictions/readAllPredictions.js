@@ -1,14 +1,14 @@
 const db = require('../../models')
-const getRegressions = require('../regressions/getRegressions')
+const readRegressions = require('../regressions/readRegressions')
 
-async function getAllPredictions(id) {
+async function readAllPredictions(id) {
     try {
         const allPredictions = []
         const predictions = await db.Prediction.find({
             user: id
         })
         for (const prediction of predictions) {
-            const regression = await getRegressions(
+            const regression = await readRegressions(
                 prediction.source
             )
             allPredictions.push({prediction, regression})
@@ -19,4 +19,4 @@ async function getAllPredictions(id) {
     }
 }
 
-module.exports = getAllPredictions
+module.exports = readAllPredictions

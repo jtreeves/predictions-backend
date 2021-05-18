@@ -2,15 +2,15 @@ const axios = require('axios')
 const key = process.env.REGRESSIONZ_API_KEY
 const regressionz = 'https://regressionz.herokuapp.com/api'
 
-async function getRegressions(source) {
+async function destroyRegressions(source) {
     try {
-        const regressions = await axios.get(
+        await axios.delete(
             regressionz + '?key=' + key + '&source=' + source
         )
-        return regressions.data
+        return 'Regressions deleted'
     } catch (error) {
         throw error
     }
 }
 
-module.exports = getRegressions
+module.exports = destroyRegressions

@@ -8,10 +8,10 @@ const passport = require('passport')
 // Import internal middleware
 require('./middleware/authentication')(passport)
 
-// Import internal controllers
-const users = require('./controllers/users')
-const predictions = require('./controllers/predictions')
-const regressions = require('./controllers/regressions')
+// Import internal routers
+const usersRouter = require('./routes/usersRoutes')
+const predictionsRouter = require('./routes/predictionsRoutes')
+const regressionsRouter = require('./routes/regressionsRoutes')
 
 // Use external middleware
 app.use(cors())
@@ -19,10 +19,10 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(passport.initialize())
 
-// Use internal controllers
-app.use('/users', users)
-app.use('/predictions', predictions)
-app.use('/regressions', regressions)
+// Use internal routers
+app.use('/users', usersRouter)
+app.use('/predictions', predictionsRouter)
+app.use('/regressions', regressionsRouter)
 
 // Get home route
 app.get('/', (req, res) => {

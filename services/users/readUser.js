@@ -1,6 +1,6 @@
 const db = require('../../models')
 
-async function getUser(id) {
+async function readUser(id) {
     try {
         const currentUser = await db.User.findOne({
             _id: id
@@ -11,4 +11,4 @@ async function getUser(id) {
     }
 }
 
-module.exports = getUser
+module.exports = readUser
