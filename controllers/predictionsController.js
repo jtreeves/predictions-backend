@@ -9,7 +9,7 @@ const predictionsController = {}
 predictionsController.postPredictions = async (req, res) => {
     try {
         const predictions = await createPredictions(
-            req.params.id, req.params.source
+            req.params.id, req.body.source
         )
         res.status(201).json({prediction: predictions})
     } catch (error) {
