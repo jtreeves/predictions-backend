@@ -62,7 +62,7 @@ usersController.putEmail = async (req, res) => {
         )
         res.status(200).json({user: updatedUser})
     } catch (error) {
-        res.status(400).json({msg: error})
+        res.status(error.code).json({msg: error.message})
     }
 }
 
