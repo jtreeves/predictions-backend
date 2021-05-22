@@ -18,8 +18,8 @@ async function createUser(name, email, password) {
                     try {
                         if (error) throw Error
                         newUser.password = hash
-                        const createdUser = await newUser.save()
-                        return createdUser
+                        await newUser.save()
+                        return
                     } catch (error) {
                         throw {
                             code: 500,

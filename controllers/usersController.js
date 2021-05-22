@@ -12,8 +12,8 @@ const usersController = {}
 
 usersController.postSignup = async (req, res) => {
     try {
-        const newUser = await createUser(req.body.name, req.body.email, req.body.password)
-        res.status(201).json({user: newUser})
+        await createUser(req.body.name, req.body.email, req.body.password)
+        res.status(201).json({msg: 'New user created'})
     } catch (error) {
         res.status(error.code).json({msg: error.message})
     }
