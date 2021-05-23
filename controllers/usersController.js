@@ -15,6 +15,10 @@ usersController.postSignup = async (req, res) => {
         await createUser(req.body.name, req.body.email, req.body.password)
         res.status(201).json({msg: 'New user created'})
     } catch (error) {
+        if (!error.code) {
+            error.code = 400
+            error.message = 'User not created'
+        }
         res.status(error.code).json({msg: error.message})
     }
 }
@@ -31,6 +35,10 @@ usersController.postLogin = async (req, res) => {
             })
         })
     } catch (error) {
+        if (!error.code) {
+            error.code = 400
+            error.message = 'User not logged in'
+        }
         res.status(error.code).json({msg: error.message})
     }
 }
@@ -62,6 +70,10 @@ usersController.putEmail = async (req, res) => {
         )
         res.status(200).json({user: updatedUser})
     } catch (error) {
+        if (!error.code) {
+            error.code = 400
+            error.message = 'Email not updated'
+        }
         res.status(error.code).json({msg: error.message})
     }
 }
