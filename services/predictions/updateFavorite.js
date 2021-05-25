@@ -2,7 +2,7 @@ const db = require('../../models')
 
 async function updateFavorite(source, favorite) {
     try {
-        if (source && favorite) {
+        if (source) {
             const updatedPredictions = await db.Prediction.updateOne(
                 {source: source},
                 {$set: {favorite: favorite}}
@@ -11,7 +11,7 @@ async function updateFavorite(source, favorite) {
         } else {
             throw {
                 code: 403,
-                message: 'Source and favorite must both be provided'
+                message: 'Source must be provided'
             }
         }
     } catch (error) {

@@ -2,7 +2,7 @@ const db = require('../../models')
 
 async function updateNote(source, note) {
     try {
-        if (source && note) {
+        if (source) {
             const updatedPredictions = await db.Prediction.updateOne(
                 {source: source},
                 {$set: {note: note}}
@@ -11,7 +11,7 @@ async function updateNote(source, note) {
         } else {
             throw {
                 code: 403,
-                message: 'Source and note must both be provided'
+                message: 'Source must be provided'
             }
         }
     } catch (error) {
