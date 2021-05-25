@@ -5,9 +5,9 @@ const readAllPredictions = require('../predictions/readAllPredictions')
 
 async function destroyUser(id) {
     try {
-        const allPredictions = await readAllPredictions(id)
-        for (const prediction of allPredictions) {
-            await destroyPrediction(prediction.source)
+        const allCollections = await readAllPredictions(id)
+        for (const collection of allCollections) {
+            await destroyPrediction(collection.prediction.source)
         }
         await db.User.deleteOne({_id: id})
         return 'User deleted'
