@@ -11,8 +11,11 @@ const JWT_SECRET = process.env.JWT_SECRET
 const usersController = {}
 
 usersController.postSignup = async (req, res) => {
+    const name = req.body.name
+    const email = req.body.email
+    const password = req.body.password
     try {
-        await createUser(req.body.name, req.body.email, req.body.password)
+        await createUser(name, email, password)
         res.status(201).json({msg: 'New user created'})
     } catch (error) {
         if (!error.code) {
@@ -24,10 +27,10 @@ usersController.postSignup = async (req, res) => {
 }
 
 usersController.postLogin = async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
     try {
-        const payload = await createPayload(
-            req.body.email, req.body.password
-        )
+        const payload = await createPayload(email, password)
         jwt.sign(payload, JWT_SECRET, {expiresIn: '1h'}, (error, token) => {
             res.status(201).json({
                 success: true,
@@ -44,30 +47,39 @@ usersController.postLogin = async (req, res) => {
 }
 
 usersController.getUser = async (req, res) => {
+    const id = req.params.id
     try {
-        const currentUser = await readUser(req.params.id)
+        const currentUser = await readUser(id)
         res.status(200).json({user: currentUser})
     } catch (error) {
-        res.status(400).json({msg: error})
+        if (!error.code) {
+            error.code = 400
+            error.message = 'User information not retrieved'
+        }
+        res.status(error.code).json({msg: error.message})
     }
 }
 
 usersController.putName = async (req, res) => {
+    const id = req.params.id
+    const name = req.body.name
     try {
-        const updatedUser = await updateName(
-            req.params.id, req.body.name
-        )
+        const updatedUser = await updateName(id, name)
         res.status(200).json({user: updatedUser})
     } catch (error) {
-        res.status(400).json({msg: error})
+        if (!error.code) {
+            error.code = 400
+            error.message = 'Name not updated'
+        }
+        res.status(error.code).json({msg: error.message})
     }
 }
 
 usersController.putEmail = async (req, res) => {
+    const id = req.params.id
+    const email = req.body.email
     try {
-        const updatedUser = await updateEmail(
-            req.params.id, req.body.email
-        )
+        const updatedUser = await updateEmail(id, email)
         res.status(200).json({user: updatedUser})
     } catch (error) {
         if (!error.code) {
@@ -79,11 +91,16 @@ usersController.putEmail = async (req, res) => {
 }
 
 usersController.deleteUser = async (req, res) => {
+    const id = req.params.id
     try {
-        const deletion = await destroyUser(req.params.id)
+        const deletion = await destroyUser(id)
         res.status(204).json({msg: deletion})
     } catch (error) {
-        res.status(400).json({msg: error})
+        if (!error.code) {
+            error.code = 400
+            error.message = 'User not deleted'
+        }
+        res.status(error.code).json({msg: error.message})
     }
 }
 

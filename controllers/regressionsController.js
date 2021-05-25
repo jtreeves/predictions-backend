@@ -14,38 +14,32 @@ regressionsController.postRegressions = async (req, res) => {
         'precision': req.body.precision,
         'data_set': req.body.dataSet
     }
-    if (
-        submission['title'] && 
-        submission['independent'] && 
-        submission['dependent'] && 
-        submission['precision'] && 
-        submission['data_set']
-    ) {
-        const source = await individuation()
-        try {
-            const regressions = await createRegressions(
-                source, submission
-            )
-            res.status(201).json({regressions: regressions})
-        } catch (error) {
-            res.status(400).json({msg: error})
+    const source = await individuation()
+    try {
+        const regressions = await createRegressions(
+            source, submission
+        )
+        res.status(201).json({regressions: regressions})
+    } catch (error) {
+        if (!error.code) {
+            error.code = 400
+            error.message = 'Regressions not created'
         }
-    } else {
-        res.status(403).json({msg: 'Title, independent, dependent, precision, and dataSet fields are all required'})
+        res.status(error.code).json({msg: error.message})
     }
 }
 
 regressionsController.getRegressions = async (req, res) => {
     const source = req.params.source
-    if (source) {
-        try {
-            const regressions = await readRegressions(source)
-            res.status(200).json({regressions: regressions})
-        } catch (error) {
-            res.status(400).json({msg: error})
+    try {
+        const regressions = await readRegressions(source)
+        res.status(200).json({regressions: regressions})
+    } catch (error) {
+        if (!error.code) {
+            error.code = 400
+            error.message = 'Regressions information not retrieved'
         }
-    } else {
-        res.status(403).json({msg: 'Source must be provided'})
+        res.status(error.code).json({msg: error.message})
     }
 }
 
@@ -58,38 +52,31 @@ regressionsController.putRegressions = async (req, res) => {
         'precision': req.body.precision,
         'data_set': req.body.dataSet
     }
-    if (
-        source &&
-        submission['title'] && 
-        submission['independent'] && 
-        submission['dependent'] && 
-        submission['precision'] && 
-        submission['data_set']
-    ) {
-        try {
-            const regressions = await updateRegressions(
-                source, submission
-            )
-            res.status(200).json({regressions: regressions})
-        } catch (error) {
-            res.status(400).json({msg: error})
+    try {
+        const regressions = await updateRegressions(
+            source, submission
+        )
+        res.status(200).json({regressions: regressions})
+    } catch (error) {
+        if (!error.code) {
+            error.code = 400
+            error.message = 'Regressions not updated'
         }
-    } else {
-        res.status(403).json({msg: 'Title, independent, dependent, precision, and dataSet fields are all required, and source must be provided'})
+        res.status(error.code).json({msg: error.message})
     }
 }
 
 regressionsController.deleteRegressions = async (req, res) => {
     const source = req.params.source
-    if (source) {
-        try {
-            const deletion = await destroyRegressions(source)
-            res.status(204).json({msg: deletion})
-        } catch (error) {
-            res.status(400).json({msg: error})
+    try {
+        const deletion = await destroyRegressions(source)
+        res.status(204).json({msg: deletion})
+    } catch (error) {
+        if (!error.code) {
+            error.code = 400
+            error.message = 'Regressions not deleted'
         }
-    } else {
-        res.status(403).json({msg: 'Source must be provided'})
+        res.status(error.code).json({msg: error.message})
     }
 }
 

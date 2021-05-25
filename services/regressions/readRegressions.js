@@ -4,10 +4,17 @@ const regressionz = 'https://regressionz.herokuapp.com/api'
 
 async function readRegressions(source) {
     try {
-        const regressions = await axios.get(
-            regressionz + '?key=' + key + '&source=' + source
-        )
-        return regressions.data
+        if (source) {
+            const regressions = await axios.get(
+                regressionz + '?key=' + key + '&source=' + source
+            )
+            return regressions.data
+        } else {
+            throw {
+                code: 403,
+                message: 'Source must be provided'
+            }
+        }
     } catch (error) {
         throw error
     }
