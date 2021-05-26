@@ -64,8 +64,8 @@ usersController.putName = async (req, res) => {
     const id = req.params.id
     const name = req.body.name
     try {
-        const updatedUser = await updateName(id, name)
-        res.status(200).json({user: updatedUser})
+        await updateName(id, name)
+        res.status(204).send()
     } catch (error) {
         if (!error.code) {
             error.code = 400
@@ -79,8 +79,8 @@ usersController.putEmail = async (req, res) => {
     const id = req.params.id
     const email = req.body.email
     try {
-        const updatedUser = await updateEmail(id, email)
-        res.status(200).json({user: updatedUser})
+        await updateEmail(id, email)
+        res.status(204).send()
     } catch (error) {
         if (!error.code) {
             error.code = 400
@@ -93,8 +93,8 @@ usersController.putEmail = async (req, res) => {
 usersController.deleteUser = async (req, res) => {
     const id = req.params.id
     try {
-        const deletion = await destroyUser(id)
-        res.status(204).json({msg: deletion})
+        await destroyUser(id)
+        res.status(204).send()
     } catch (error) {
         if (!error.code) {
             error.code = 400
