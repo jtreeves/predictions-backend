@@ -68,8 +68,8 @@ predictionsController.putNote = async (req, res) => {
 predictionsController.deletePredictions = async (req, res) => {
     const source = req.params.source
     try {
-        const deletion = await destroyPredictions(source)
-        res.status(204).json({msg: deletion})
+        await destroyPredictions(source)
+        res.status(204).send()
     } catch (error) {
         if (!error.code) {
             error.code = 400
