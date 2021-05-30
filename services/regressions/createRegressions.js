@@ -1,7 +1,7 @@
 const axios = require('axios')
 const key = process.env.REGRESSIONZ_API_KEY
 const regressionz = 'https://regressionz.herokuapp.com/api'
-const individuation = require('../../middleware/individuation')
+const individuation = require('../../utilities/individuation')
 
 async function createRegressions(submission) {
     const source = await individuation()

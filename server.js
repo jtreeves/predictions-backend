@@ -6,7 +6,7 @@ const cors = require('cors')
 const passport = require('passport')
 
 // Import internal middleware
-require('./middleware/authentication')(passport)
+require('./utilities/authentication')(passport)
 
 // Import internal routers
 const usersRouter = require('./routes/usersRoutes')
