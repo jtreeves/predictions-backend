@@ -2,12 +2,15 @@ const db = require('../../models')
 
 async function createPredictions(id, source) {
     try {
+        console.log('ID IN CREATE PREDICTIONS: ', id)
+        console.log('SOURCE IN CREATE PREDICTIONS: ', source)
         if (id) {
             if (source) {
                 const predictions = await db.Prediction.create({
                     user: id,
                     source: source
                 })
+                console.log('RESULT OF CREATE PREDICTIONS: ', predictions)
                 return predictions
             } else {
                 throw {

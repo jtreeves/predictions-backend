@@ -4,6 +4,8 @@ const regressionz = 'https://regressionz.herokuapp.com/api'
 
 async function createRegressions(source, submission) {
     try {
+        console.log('SOURCE IN CREATE REGRESSIONS: ', source)
+        console.log('SUBMISSION IN CREATE REGRESSIONS: ', submission)
         if (source) {
             if (
                 submission['title'] && 
@@ -16,6 +18,7 @@ async function createRegressions(source, submission) {
                     regressionz + '?key=' + key + '&source=' + source,
                     submission
                 )
+                console.log('RESULT OF CREATE REGRESSIONS: ', regressions.data)
                 return regressions.data
             } else {
                 throw {

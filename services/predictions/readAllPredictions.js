@@ -3,6 +3,7 @@ const readRegressions = require('../regressions/readRegressions')
 
 async function readAllPredictions(id) {
     try {
+        console.log('ID IN READ ALL PREDICTIONS: ', id)
         if (id) {
             const allPredictions = []
             const predictions = await db.Prediction.find({
@@ -14,6 +15,7 @@ async function readAllPredictions(id) {
                 )
                 allPredictions.push({prediction, regression})
             }
+            console.log('RESULT OF READ ALL PREDICTIONS: ', allPredictions)
             return allPredictions
         } else {
             throw {
