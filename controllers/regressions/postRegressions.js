@@ -1,5 +1,4 @@
 const createRegressions = require('../../services/regressions/createRegressions')
-const individuation = require('../../middleware/individuation')
 
 async function postRegressions(req, res) {
     const submission = {
@@ -9,10 +8,9 @@ async function postRegressions(req, res) {
         'precision': req.body.precision,
         'data_set': req.body.dataSet
     }
-    const source = await individuation()
     try {
         const regressions = await createRegressions(
-            source, submission
+            submission
         )
         res.status(201).json({regressions: regressions})
     } catch (error) {
@@ -20,7 +18,6 @@ async function postRegressions(req, res) {
             error.code = 400
             error.message = 'Regressions not created'
         }
-        console.log('ERROR IN POST REGRESSIONS: ', error)
         res.status(error.code).json({msg: error.message})
     }
 }

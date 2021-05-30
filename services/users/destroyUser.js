@@ -1,7 +1,6 @@
 const db = require('../../models')
-
-const destroyPrediction = require('../predictions/destroyPredictions')
 const readAllPredictions = require('../predictions/readAllPredictions')
+const destroyPrediction = require('../predictions/destroyPredictions')
 
 async function destroyUser(id) {
     try {

@@ -1,5 +1,4 @@
 const db = require('../../models')
-
 const destroyRegressions = require('../regressions/destroyRegressions')
 
 async function destroyPredictions(source) {
