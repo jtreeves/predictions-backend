@@ -11,7 +11,6 @@ async function postPredictions(req, res) {
             error.code = 400
             error.message = 'Predictions not created'
         }
-        console.log('ERROR IN POST PREDICTIONS: ', error)
         res.status(error.code).json({msg: error.message})
     }
 }

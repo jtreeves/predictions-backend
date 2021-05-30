@@ -10,7 +10,6 @@ async function getPredictions(req, res) {
             error.code = 400
             error.message = 'Predictions information not retrieved'
         }
-        console.log('ERROR IN GET PREDICTIONS: ', error)
         res.status(error.code).json({msg: error.message})
     }
 }
